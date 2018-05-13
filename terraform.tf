@@ -2,13 +2,13 @@ provider "aws" {}
 # variable "security_group_id" {}
 
 
-resource "aws_vpc" "main_vpc" {
-    cidr_block = "0.0.0.0/0"
-    tags {
-      Name = "main_vpc"
-    }
-}
-
+# resource "aws_vpc" "main_vpc" {
+#     cidr_block = "0.0.0.0/0"
+#     tags {
+#       Name = "main_vpc"
+#     }
+# }
+# 
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
@@ -56,11 +56,11 @@ resource "aws_instance" "postgres" {
 
 
 module "ansible_provisioner" {
-   source    = "github.com/cloudposse/tf_ansible"
+  source    = "github.com/cloudposse/tf_ansible"
 
-   arguments = ["--user=ubuntu"]
-   envs      = ["host=${aws_instance.web.public_ip}"]
-   playbook  = "./ansible/provision.yml"
-   dry_run   = false
+  arguments = ["--user=ubuntu"]
+  envs      = ["host=${aws_instance.web.public_ip}"]
+  playbook  = "./ansible/provision.yml"
+  dry_run   = false
 
 }
