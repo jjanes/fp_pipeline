@@ -9,14 +9,6 @@ resource "aws_vpc" "main_vpc" {
     }
 }
 
-resource "aws_subnet" "public_subnet_1" {
-    vpc_id = "${aws_vpc.main_vpc.id}"
-    cidr_block = "0.0.0.0/0"
-    tags {
-      Name = "PublicSubnet1"
-    }
-}
-
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
@@ -62,3 +54,13 @@ resource "aws_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
+
+module "ansible_provisioner" {
+   source    = "github.com/cloudposse/tf_ansible"
+
+   arguments = ["--user=ubuntu"]
+   envs      = ["host=${aws_instance.web.public_ip}"]
+   playbook  = "./ansible/provision.yml"
+   dry_run   = false
+
+}
