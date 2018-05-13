@@ -31,7 +31,7 @@ resource "aws_instance" "web" {
   instance_type = "t2.nano"
   associate_public_ip_address = true
   provisioner "local-exec" { 
-    command = "sleep 5"
+    command = "echo ${aws_instance.web.public_ip} >> .inventory"
   }
   tags {
     Name = "prod-web-01"
