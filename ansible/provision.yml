@@ -1,4 +1,4 @@
-- hosts: web
+- hosts: prod
   name: configuration play
   user: ubuntu
   gather_facts: false
@@ -7,9 +7,21 @@
       become: true
       raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
       changed_when: false
+- hosts: web
+  name: setup web servers
+  user: ubuntu 
+  gather_facts: false
   tasks:
     - name: Install nginx
       become: true
       apt:
         name: nginx
         update_cache: true
+- hosts: db
+  tasks:
+    - name: ensure apt cache is up to date
+      apt: update_cache=yes
+    - name: ensure packages are installed
+      apt: name={{item}}
+      with_items:
+        - postgresql

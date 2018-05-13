@@ -54,13 +54,13 @@ resource "aws_instance" "postgres" {
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
-
-module "ansible_provisioner" {
-  source    = "github.com/cloudposse/tf_ansible"
-
-  arguments = ["--user=ubuntu"]
-  envs      = ["host=${aws_instance.web.public_ip}"]
-  playbook  = "./ansible/provision.yml"
-  dry_run   = false
-
-}
+# 
+# module "ansible_provisioner" {
+#   source    = "github.com/cloudposse/tf_ansible"
+# 
+#   arguments = ["--user=ubuntu"]
+#   envs      = ["host=${aws_instance.web.public_ip}"]
+#   playbook  = "./ansible/provision.yml"
+#   dry_run   = false
+# 
+# }
