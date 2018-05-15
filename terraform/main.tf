@@ -1,6 +1,10 @@
 provider "aws" {}
 # variable "security_group_id" {}
 
+variable "default_key_name" { 
+  default = "terraform"
+  type = "string"
+}
 
 # resource "aws_vpc" "main_vpc" {
 #     cidr_block = "0.0.0.0/0"
@@ -45,7 +49,7 @@ resource "aws_instance" "web" {
     Name = "prod-web-01"
   }
 
-  key_name = "terraform"
+  key_name = "${var.default_key_name}"
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 
 }
@@ -58,7 +62,7 @@ resource "aws_instance" "postgres" {
     Name = "prod-db01"
   }
 
-  key_name = "terraform"
+  key_name = "${var.default_key_name}"
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
@@ -70,7 +74,7 @@ resource "aws_instance" "logstash" {
   tags {
     Name = "prod-log"
   }
-  key_name = "terraform"
+  key_name = "${var.default_key_name}"
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
@@ -81,7 +85,7 @@ resource "aws_instance" "elastic" {
   tags {
     Name = "prod-elastic"
   }
-  key_name = "terraform"
+  key_name = "${var.default_key_name}"
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
@@ -92,7 +96,7 @@ resource "aws_instance" "kibana" {
   tags {
     Name = "prod-kibana"
   }
-  key_name = "terraform"
+  key_name = "${var.default_key_name}"
   vpc_security_group_ids = ["${aws_security_group.allow_all.id}"]
 }
 
