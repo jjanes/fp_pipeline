@@ -15,7 +15,7 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_security_group" "allow_all" {
-  name = "${var.vpc_default_all}"
+  name = "${var.vpc_default_name}"
   # vpc_id = "${aws_vpc.main_vpc.id}"
   ingress {
     from_port   = 0
