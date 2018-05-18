@@ -1,11 +1,6 @@
 provider "aws" {}
 # variable "security_group_id" {}
 
-variable "default_key_name" { 
-  default = "terraform"
-  type = "string"
-}
-
 # resource "aws_vpc" "main_vpc" {
 #     cidr_block = "0.0.0.0/0"
 #     tags {
@@ -20,7 +15,7 @@ resource "aws_key_pair" "deployer" {
 }
 
 resource "aws_security_group" "allow_all" {
-  name = "allow_all"
+  name = "${var.vpc_default_all}"
   # vpc_id = "${aws_vpc.main_vpc.id}"
   ingress {
     from_port   = 0
